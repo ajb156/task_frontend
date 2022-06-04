@@ -1,14 +1,16 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import { clienteAxios } from "../helpers/axios";
 import { Alerta } from "../components/Alerta";
+import toast from "react-hot-toast";
 
 export const Resgistrar = () => {
   const [alerta, setAlerta] = useState({});
   const [registro, setRegistro] = useState({
-    nombre: "",
-    email: "",
-    password: "",
-    repetirPassword: "",
+    nombre: "Adolfo Blanco",
+    email: "ajblanco156@gmail.com",
+    password: "Ablanco156*",
+    repetirPassword: "Ablanco156*",
   });
 
   const { msg } = alerta;
@@ -21,7 +23,7 @@ export const Resgistrar = () => {
     });
   };
 
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
     if ([nombre, email, password, repetirPassword].includes("")) {
       setAlerta({
@@ -42,6 +44,18 @@ export const Resgistrar = () => {
     setAlerta({});
 
     // Crear usuario en la api
+    try {
+      const { data } = await clienteAxios.post("/usuarios", registro);
+      setRegistro({
+        nombre: "",
+        email: "",
+        password: "",
+        repetirPassword: "",
+      });
+      toast.success(data.msg);
+    } catch (error) {
+      toast.error(error.response.data.msg);
+    }
   };
 
   return (
