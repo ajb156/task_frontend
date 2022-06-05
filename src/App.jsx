@@ -8,6 +8,8 @@ import { Resgistrar } from "./paginas/Resgistrar";
 
 import { AuthProvider } from "./context/AuthProvider";
 import { Toaster } from "react-hot-toast";
+import { RutaProtegida } from "./layouts/RutaProtegida";
+import { Proyectos } from "./paginas/Proyectos";
 
 function App() {
   return (
@@ -23,6 +25,12 @@ function App() {
             <Route path="olvide-password/:token" element={<NuevoPassword />} />
             <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
           </Route>
+
+          {/** Grupo de rutas con autenticación */}
+          <Route path="/proyectos" element={<RutaProtegida />}>
+            <Route index element={<Proyectos />} />
+          </Route>
+          
         </Routes>
       </AuthProvider>
     </BrowserRouter>

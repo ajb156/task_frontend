@@ -22,7 +22,6 @@ clienteAxiosToken.interceptors.request.use(
       "X-Requested-With": "XMLHttpRequest",
       Authorization: `Bearer ${token}`,
     };
-
     return config;
   },
   (error) => {

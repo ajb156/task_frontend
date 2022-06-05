@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Alerta } from "../components/Alerta";
 import { clienteAxios } from "../helpers/axios";
 import useAuth from "../hooks/useAuth";
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [alerta, setAlerta] = useState({});
   const [login, setLogin] = useState({
     email: "ajblanco156@gmail.com",
@@ -14,7 +15,7 @@ export const Login = () => {
   const { email, password } = login;
   const { msg } = alerta;
 
-  const handleSubmit = async (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
     if (email === "" || password === "") {
       setAlerta({
@@ -26,7 +27,8 @@ export const Login = () => {
     try {
       const { data } = await clienteAxios.post("/usuarios/autenticar", login);
       localStorage.setItem("token", data.token);
-      setAuth(data);
+      setAuth(data.usuario);
+      navigate("/proyectos");
       setAlerta({});
     } catch (error) {
       setAlerta({
@@ -52,7 +54,7 @@ export const Login = () => {
       {msg && <Alerta alerta={alerta} />}
       <form
         className="my-10 bg-white shadow rounded-lg px-10 py-5"
-        onSubmit={handleSubmit}
+        onSubmit={handleForm}
       >
         <div className="my-5">
           <label htmlFor="email" className="input-label">

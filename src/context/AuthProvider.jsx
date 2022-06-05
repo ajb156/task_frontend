@@ -9,27 +9,34 @@ export const AuthProvider = ({ children }) => {
   /** Aqui van las funciones */
 
   const [auth, setAuth] = useState({});
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
+    /** Comprobar autenticacion */
     const autenticarUsuario = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token") || null;
       if (!token) {
+        setCargando(false);
         return;
       }
+
       try {
         const { data } = await clienteAxiosToken.get("/usuarios/perfil");
         setAuth(data);
       } catch (error) {
-        console.log(error);
+        setAuth({});
       }
+      setCargando(false);
     };
     autenticarUsuario();
-  }, [auth]);
+  }, []);
 
   /** Esta es la informacion que estara disponible en los componentes */
   return (
     <AuthContext.Provider
       value={{
+        auth,
+        cargando,
         setAuth,
       }}
     >
