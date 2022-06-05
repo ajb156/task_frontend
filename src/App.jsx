@@ -6,19 +6,25 @@ import { NuevoPassword } from "./paginas/NuevoPassword";
 import { OlvidePassword } from "./paginas/OlvidePassword";
 import { Resgistrar } from "./paginas/Resgistrar";
 
+import { AuthProvider } from "./context/AuthProvider";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/** Grupo de rutas sin autenticacion cargan el template desde AuthLayout */}
-        <Route path="/" element={<AuthLayout />}>
-          <Route index element={<Login />} />
-          <Route path="registrar" element={<Resgistrar />} />
-          <Route path="olvide-password" element={<OlvidePassword />} />
-          <Route path="olvide-password/:token" element={<NuevoPassword />} />
-          <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
-        </Route>
-      </Routes>
+      <Toaster position="top-right" reverseOrder={false} />
+      <AuthProvider>
+        <Routes>
+          {/** Grupo de rutas sin autenticacion cargan el template desde AuthLayout */}
+          <Route path="/" element={<AuthLayout />}>
+            <Route index element={<Login />} />
+            <Route path="registrar" element={<Resgistrar />} />
+            <Route path="olvide-password" element={<OlvidePassword />} />
+            <Route path="olvide-password/:token" element={<NuevoPassword />} />
+            <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
