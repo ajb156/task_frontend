@@ -20,7 +20,7 @@ clienteAxiosToken.interceptors.request.use(
     config.headers = {
       Accept: "application/json",
       "X-Requested-With": "XMLHttpRequest",
-      Authorization: `${token}`,
+      Authorization: `Bearer ${token}`,
     };
 
     return config;
