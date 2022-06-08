@@ -10,28 +10,35 @@ import { AuthProvider } from "./context/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import { RutaProtegida } from "./layouts/RutaProtegida";
 import { Proyectos } from "./paginas/Proyectos";
+import { NuevoProyecto } from "./paginas/NuevoProyecto";
+import { ProyectoProvider } from "./context/ProyectoProvider";
 
 function App() {
   return (
     <BrowserRouter>
       <Toaster position="top-right" reverseOrder={false} />
       <AuthProvider>
-        <Routes>
-          {/** Grupo de rutas sin autenticacion cargan el template desde AuthLayout */}
-          <Route path="/" element={<AuthLayout />}>
-            <Route index element={<Login />} />
-            <Route path="registrar" element={<Resgistrar />} />
-            <Route path="olvide-password" element={<OlvidePassword />} />
-            <Route path="olvide-password/:token" element={<NuevoPassword />} />
-            <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
-          </Route>
+        <ProyectoProvider>
+          <Routes>
+            {/** Grupo de rutas sin autenticacion cargan el template desde AuthLayout */}
+            <Route path="/" element={<AuthLayout />}>
+              <Route index element={<Login />} />
+              <Route path="registrar" element={<Resgistrar />} />
+              <Route path="olvide-password" element={<OlvidePassword />} />
+              <Route
+                path="olvide-password/:token"
+                element={<NuevoPassword />}
+              />
+              <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
+            </Route>
 
-          {/** Grupo de rutas con autenticación */}
-          <Route path="/proyectos" element={<RutaProtegida />}>
-            <Route index element={<Proyectos />} />
-          </Route>
-          
-        </Routes>
+            {/** Grupo de rutas con autenticación */}
+            <Route path="/proyectos" element={<RutaProtegida />}>
+              <Route index element={<Proyectos />} />
+              <Route path="crear-proyecto" element={<NuevoProyecto />} />
+            </Route>
+          </Routes>
+        </ProyectoProvider>
       </AuthProvider>
     </BrowserRouter>
   );

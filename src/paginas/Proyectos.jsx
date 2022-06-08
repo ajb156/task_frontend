@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { Fragment } from "react";
+import useProyecto from "../hooks/useProyecto";
 
 export const Proyectos = () => {
+  const { proyectos } = useProyecto();
+
+  console.log(proyectos);
   return (
-    <div>Proyectos</div>
-  )
-}
+    <Fragment>
+      <h1 className="text-4xl font-black">Proyectos</h1>
+      <div></div>
+    </Fragment>
+  );
+};
