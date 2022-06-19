@@ -11,5 +11,7 @@
 }
 
 .button-full {
-  @apply bg-sky-700 mb-5 w-full py-3 text-white uppercase font-bold rounded-lg hover:cursor-pointer hover:bg-sky-900 transition-colors;
+  @apply bg-sky-700 mb-4 w-full py-3 text-white uppercase font-bold rounded-lg hover:cursor-pointer hover:bg-sky-900 transition-colors;
 }
+
+

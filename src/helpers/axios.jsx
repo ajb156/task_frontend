@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Axios peticion sin token
 export const clienteAxios = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: process.env.REACT_APP_API_URL + 'api',
   headers: {
     Accept: "application/json",
     "X-Requested-With": "XMLHttpRequest",
@@ -11,7 +11,7 @@ export const clienteAxios = axios.create({
 
 // Axios peticion con token
 export const clienteAxiosToken = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: process.env.REACT_APP_API_URL + 'api',
 });
 
 clienteAxiosToken.interceptors.request.use(

@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import useProyecto from "../hooks/useProyecto";
 import { Alerta } from "./Alerta";
 
 export const Formulario = () => {
-  const { mostrarAlerta, alerta, submitProyecto } = useProyecto();
-  const [proyecto, setProyecto] = useState({
+  const { mostrarAlerta, alerta, submitProyecto, proyecto } = useProyecto();
+  const [nuevoProyecto, setNuevoProyecto] = useState({
+    id: null,
     nombre: "",
     descripcion: "",
     fechaEntrega: "",
     cliente: "",
   });
 
-  const { nombre, descripcion, fechaEntrega, cliente } = proyecto;
+  const { nombre, descripcion, fechaEntrega, cliente } = nuevoProyecto;
+
+  const params = useParams();
   const { msg } = alerta;
+
+  useEffect(() => {
+    if (params.id) {
+      setNuevoProyecto({
+        id: proyecto._id,
+        nombre: proyecto.nombre,
+        descripcion: proyecto.descripcion,
+        fechaEntrega: proyecto.fechaEntrega?.split("T")[0],
+        cliente: proyecto.cliente,
+      });
+    }
+  }, [params]);
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -24,13 +40,13 @@ export const Formulario = () => {
       return;
     }
     // Pasar los datos al provider
-    submitProyecto(proyecto);
-    setProyecto({});
+    submitProyecto(nuevoProyecto);
+    setNuevoProyecto({});
   };
 
   const handleInputs = ({ target }) => {
-    setProyecto({
-      ...proyecto,
+    setNuevoProyecto({
+      ...nuevoProyecto,
       [target.name]: target.value,
     });
   };
@@ -51,7 +67,7 @@ export const Formulario = () => {
           className="input-form"
           id="nombre"
           name="nombre"
-          value={nombre}
+          value={nombre || ''}
           onChange={handleInputs}
         />
       </div>
@@ -79,7 +95,7 @@ export const Formulario = () => {
           className="input-form"
           id="fecha-entrega"
           name="fechaEntrega"
-          value={fechaEntrega}
+          value={fechaEntrega || ''}
           onChange={handleInputs}
         />
       </div>
@@ -93,11 +109,15 @@ export const Formulario = () => {
           className="input-form"
           id="cliente"
           name="cliente"
-          value={cliente}
+          value={cliente || ''}
           onChange={handleInputs}
         />
       </div>
-      <input type="submit" className="button-full" value="Guargar Proyecto" />
+      <input
+        type="submit"
+        className="button-full"
+        value={`${params.id ? "Editar Proyecto" : "Guargar Proyecto"}`}
+      />
     </form>
   );
 };
