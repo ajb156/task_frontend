@@ -8,8 +8,8 @@ export const Login = () => {
   const navigate = useNavigate();
   const [alerta, setAlerta] = useState({});
   const [login, setLogin] = useState({
-    email: "ajblanco156@gmail.com",
-    password: "Ablanco156*",
+    email: "",
+    password: "",
   });
   const { setAuth } = useAuth();
   const { email, password } = login;
