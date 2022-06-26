@@ -7,10 +7,10 @@ import toast from "react-hot-toast";
 export const Resgistrar = () => {
   const [alerta, setAlerta] = useState({});
   const [registro, setRegistro] = useState({
-    nombre: "Adolfo Blanco",
-    email: "ajblanco156@gmail.com",
-    password: "Ablanco156*",
-    repetirPassword: "Ablanco156*",
+    nombre: "",
+    email: "",
+    password: "",
+    repetirPassword: "",
   });
 
   const { msg } = alerta;

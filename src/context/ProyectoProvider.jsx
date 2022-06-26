@@ -173,13 +173,25 @@ export const ProyectoProvider = ({ children }) => {
     setCargando(false);
   };
 
-  const agregarColaborador = async(email) => {
+  const agregarColaborador = async (email) => {
     try {
-
+      const { data } = await clienteAxiosToken.post(
+        `/proyectos/colaboradores/${proyecto._id}`,
+        email
+      );
+      setAlerta({
+        msg: data.msg,
+        error: false,
+      });
+      setColaborador({});
+      setAlerta({});
     } catch (error) {
-      
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
     }
-  }
+  };
 
   return (
     <ProyectoContext.Provider
@@ -202,7 +214,7 @@ export const ProyectoProvider = ({ children }) => {
         eliminarTarea,
         submitColaborador,
         colaborador,
-        agregarColaborador
+        agregarColaborador,
       }}
     >
       {children}
